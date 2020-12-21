@@ -7,7 +7,22 @@ const rls = require('readline-sync')
  * @returns {undefined}
  */
 const startGame = () => {
-
+  console.log("Welcome!")
+//prompt user if they want to play
+  let answer = rls.keyInYN("Do you want to play?")
+//if yes
+  if(answer) {
+//call gameLoop()
+    console.log("Let's start!")
+    gameLoop()
+  }
+//call gameLoop()
+//else
+  else {
+    console.log('Have a nice life!')
+    quitGame()
+  }
+//call quitGame()
 }
 
 /**
@@ -17,7 +32,8 @@ const startGame = () => {
  * @returns {undefined}
  */
 const quitGame = () => {
-
+  console.log("Goodbye!")
+  process.exit()
 }
 
 /**
@@ -28,7 +44,25 @@ const quitGame = () => {
  * @returns {undefined}
  */
 const gameLoop = () => {
-
+  console.log("I have a random number in mind")
+  console.log("It's between 1 and 1000")
+  console.log("You have 10 guesses total")
+  let numberOfGuesses = 10
+  let randomNumber = generateRandomNumber()
+  while (numberOfGuesses > 0) {
+    let guess = rls.questionInt("Guess a number: ")
+    if(guess === randomNumber) {
+      console.log("You Win!")
+      rls.keyInYN("Want to play again?") ? gameLoop() : quitGame()
+    }
+    else if (guess < randomNumber) {
+      console.log("Too low")
+    }
+    else {
+      console.log ("Too high")
+    }
+    numberOfGuesses--
+  }
 }
 
 
@@ -38,7 +72,8 @@ const gameLoop = () => {
  * @returns {number} - a number between 1 and 1000
  */
 const generateRandomNumber = () => {
-
+  const randomNumber = Math.round(Math.random()*1000) 
+  return randomNumber
 }
 
 startGame()
